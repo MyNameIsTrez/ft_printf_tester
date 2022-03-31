@@ -1,0 +1,214 @@
+////////////////////////////////////////////////////////////////////////////////
+// General printf() format
+
+printf("%d",    123)
+       ~~~~     ~~~
+      format  value 1
+
+////////////////////////////////////////////////////////////////////////////////
+// Behavior table
+
+      +-----+-----+-----+-----+-----+-----+
+      | '-' | '0' | '.' | '#' | ' ' | '+' |
++-----+-----+-----+-----+-----+-----+-----+
+| 'c' |     | UB  | [1] | UB  | UB  | UB  |
++-----+-----+-----+-----+-----+-----+-----+
+| 'p' |     | UB  | [1] | UB  | UB  | UB  |
++-----+-----+-----+-----+-----+-----+-----+
+| 's' |     | UB  | [2] | UB  | UB  | UB  |
++-----+-----+-----+-----+-----+-----+-----+
+| 'd' |     |     |     | UB  |     |     |
++-----+-----+-----+-----+-----+-----+-----+
+| 'i' |     |     |     | UB  |     |     |
++-----+-----+-----+-----+-----+-----+-----+
+| 'u' |     |     |     | UB  | UB  | UB  |
++-----+-----+-----+-----+-----+-----+-----+
+| 'x' |     |     |     | [3] | UB  | UB  |
++-----+-----+-----+-----+-----+-----+-----+
+| 'X' |     |     |     | [3] | UB  | UB  |
++-----+-----+-----+-----+-----+-----+-----+
+| '%' | [4] | [4] | DN  | DN  | DN  | DN  |
++-----+-----+-----+-----+-----+-----+-----+
+
+////////////////////////////////////////////////////////////////////////////////
+// Behavior table explanation
+
+"-0.# +" are flags
+
+"cpsdiuxX%" are conversion specifiers
+
+An empty space stands for it doing something and being Defined Behavior
+UB stands for Undefined Behavior and should make printf return a negative number
+DN stands for Does Nothing, but is NOT Undefined Behavior
+
+////////////////////////////////////////////////////////////////////////////////
+// Examples
+
+// Normal
+printf("'%d'\n"   ,  123) -> '123'
+printf("'%d'\n"   , -123) -> '-123'
+
+// Minimum field width
+// It adds ' ' characters to get the printed string to the specified width
+printf("'%5d'\n"  ,  123) -> '  123'
+printf("'%5d'\n"  , -123) -> ' -123'
+
+// '0'
+// It makes the minimum field width use '0' instead of ' '
+printf("'%0d'\n"  ,  123) -> '123'
+printf("'%05d'\n" ,  123) -> '00123'
+// It also makes the field width add to the *right* of the sign, like precision
+printf("'%05d'\n" , -123) -> '-0123'
+// '0' is ignored if a precision is given with a numeric conversion (diuxX)
+printf("'%7.d'\n" , -123) -> '   -123'
+printf("'%07.d'\n", -123) -> '   -123'
+
+// '+'
+// It adds a '+' *somewhere* to the left of positive number
+printf("'%+d'\n"  ,  123) -> '+123'
+printf("'%+d'\n"  , -123) -> '-123'
+printf("'%+5d'\n" ,  123) -> ' +123'
+printf("'%+5d'\n" , -123) -> ' -123'
+
+// '0' and '+' with field width
+// The added '+' appears in front of the added '0' characters
+printf("'%0+5d'\n",  123) -> '+0123'
+
+// ' '
+// It adds a ' ' to the left of positive numbers
+printf("'% d'\n"  ,  123) -> ' 123'
+printf("'% d'\n"  , -123) -> '-123'
+printf("'% 5d'\n" ,  123) -> '  123'
+printf("'% 5d'\n" , -123) -> ' -123'
+
+// '-'
+// It aligns everything to the left
+printf("'%-d'\n"  ,  123) -> '123'
+printf("'%-5d'\n" ,  123) -> '123  '
+printf("'%-5d'\n" , -123) -> '-123 '
+
+// '.', which means precision
+// It adds '0' characters in front of the number
+printf("'%.d'\n"   , 123) -> '123'
+printf("'%.0d'\n"  , 123) -> '123'
+printf("'%.1d'\n"  , 123) -> '123'
+printf("'%.5d'\n"  , 123) -> '00123'
+printf("'%0.5d'\n" , 123) -> '00123'
+printf("'%+.5d'\n" , 123) -> '+00123'
+printf("'% .5d'\n" , 123) -> ' 00123'
+// A precision of 0 means that no character is written for the number 0
+printf("'%.0d'\n"  ,   0) -> ''
+printf("'%.d'\n"   ,   0) -> ''
+printf("'%.1d'\n"  ,   0) -> '0'
+
+// '.' and field width
+printf("'%0.0d'\n" , 123) -> '123'
+printf("'%1.1d'\n" , 123) -> '123'
+printf("'%5.0d'\n" , 123) -> '  123'
+printf("'%0.5d'\n" , 123) -> '00123'
+printf("'%5.5d'\n" , 123) -> '00123'
+
+// Field width vs precision
+printf("'%05d'\n", 123)     -> '00123'
+printf("'%.5d'\n", 123)     -> '00123'
+printf("'%.5d'\n", 1234567) -> '1234567'
+printf("'%05d'\n", 1234567) -> '1234567'
+printf("'%05d'\n", -123)    -> '-0123'
+printf("'%.5d'\n", -123)    -> '-00123'
+printf("'%.5d'\n", 0)       -> '00000'
+printf("'%05d'\n", 0)       -> '00000'
+printf("'%0d'\n", 0)        -> '0'
+printf("'%.d'\n", 0)        -> ''
+
+// Precision and '+' or ' '
+printf("%+.d", 0) -> '+'
+printf("% .d", 0) -> ' '
+
+////////////////////////////////////////////////////////////////////////////////
+// Notes
+
+' ' is ignored when '+' is present
+'0' is ignored when '-' is present
+
+'+' is NOT ignored when '0' is present
+printf("'%5d'\n"  , 123) -> '  123'
+printf("'%+5d'\n" , 123) -> ' +123'
+printf("'%05d'\n" , 123) -> '00123'
+printf("'%+05d'\n", 123) -> '+0123'
+
+Conversion specifiers (cpsdiuxX%) can occur multiple times in a format string
+printf("'%++d'\n", 123) -> '+123'
+
+The order of flags never matters
+printf("'% -10d'\n", 123) -> ' 123      '
+printf("'%- 10d'\n", 123) -> ' 123      '
+
+////////////////////////////////////////////////////////////////////////////////
+// The order in which things can be parsed
+
+1. If the conversion type wasn't %, parse the argument and store a pointer to it
+   If the argument was negative, don't store the '-' and do store it's negative
+2a. '.'
+2b. If a field width *and* '0' are used
+3. '0'
+4. '+' / ' ' / '#'
+5. Field width
+6. '-'
+
+////////////////////////////////////////////////////////////////////////////////
+
+Cells in the table that contain [number] are explained below
+
+////////////////////////////////////////////////////////////////////////////////
+// [1]
+
+'c' and 'p' only have UB with '.' when a precision number is also specified
+
+printf("'%c'\n"  , 0) -> '' (unprintable character)
+printf("'%.c'\n" , 0) -> ''
+printf("'%.0c'\n", 0) -> UB
+
+printf("'%p'\n"  , (void *)0  ) -> '0x0'
+printf("'%.p'\n" , (void *)0  ) -> '0x'
+printf("'%.0p'\n", (void *)123) -> UB
+
+////////////////////////////////////////////////////////////////////////////////
+// [2]
+
+With 's', precision truncates the original string
+
+printf("'%s'\n"   , "foo") -> 'foo'
+printf("'%.s'\n"  , "foo") -> ''
+printf("'%.2s'\n" , "foo") -> 'fo'
+printf("'%5.2s'\n", "foo") -> '   fo'
+printf("'%.5s'\n" , "foo") -> 'foo'
+
+////////////////////////////////////////////////////////////////////////////////
+// [3]
+
+When the number is 0, 0x and 0X aren't prepended to it
+
+printf("'%x'\n" , 1) -> '1'
+printf("'%#x'\n", 1) -> '0x1'
+printf("'%#x'\n", 0) -> '0'
+printf("'%#x'\n", 1) -> '0x1'
+
+printf("'%X'\n" , 1) -> '1'
+printf("'%#X'\n", 1) -> '0X1'
+printf("'%#X'\n", 0) -> '0'
+
+printf("'%#5x'\n" , 123) -> ' 0x7b'
+printf("'%0#5x'\n", 123) -> '0x07b'
+
+printf("'%0#.10x'\n", -123) -> '0x00ffffff85'
+
+////////////////////////////////////////////////////////////////////////////////
+// [4]
+
+'-' and '0' also affect '%'
+
+printf("'%2%'\n" ) -> ' %'
+printf("'%-2%'\n") -> '% '
+printf("'%02%'\n") -> '0%'
+
+////////////////////////////////////////////////////////////////////////////////

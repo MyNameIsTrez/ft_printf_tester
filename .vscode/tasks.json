@@ -1,0 +1,28 @@
+{
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "C/C++: gcc build project",
+			"command": "make",
+			"args": [
+				"-f",
+				"tester.mk",
+				"tester"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"presentation": {
+				"reveal": "always"
+			},
+		}
+	],
+	"version": "2.0.0"
+}

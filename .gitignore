@@ -1,0 +1,28 @@
+# Ignore everything
+*
+
+# Allow folders
+!*/
+
+# Allow .c and .h files
+!*.[ch]
+
+# Allow everything in testers
+!testers/**
+
+# Allow Makefiles
+!Makefile
+!*.mk
+
+# Allow repos to contain their own .gitignore
+!.gitignore
+!.gitmodules
+
+# Miscellaneous
+!.vscode/*.json
+!.normignore
+!TODO.md
+!README.md
+
+# Project specific
+!DOCUMENTATION.txt
