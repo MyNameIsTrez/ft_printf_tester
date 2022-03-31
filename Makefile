@@ -15,7 +15,7 @@ PROJECT_NAME := ft_printf
 
 ################################################################################
 
-MAKEFILE_DIR := ../../Projects/$(PROJECT_NAME)
+MAKEFILE_DIR := $(PROJECT_NAME)
 
 export DEBUG := 1
 include $(MAKEFILE_DIR)/Makefile
