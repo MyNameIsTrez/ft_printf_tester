@@ -59,6 +59,7 @@ START_OF_MAKEFILE_SHORTCUT := foo$(START_OF_MAKEFILE)
 $(START_OF_MAKEFILE_SHORTCUT):
 	$(MAKE) -C $(MAKEFILE_DIR) $(START_OF_MAKEFILE)
 
+.DEFAULT_GOAL := $(TESTER)
 $(TESTER): $(START_OF_MAKEFILE_SHORTCUT) $(MASSERT) $(TESTER_OBJECTS)
 	$(CC) $(CFLAGS) $(TESTER_INCLUDES) -g3 $(TESTER_OBJECTS) $(TESTER_LIB_FLAGS) -o $(TESTER)
 
@@ -76,14 +77,14 @@ $(MASSERT):
 
 ################################################################################
 
-fclean_tester:
+fclean_t:
 	rm -rf $(TESTS_OBJ_DIR)
 	rm -f $(TESTER)
 	@$(MAKE) -C $(MAKEFILE_DIR) fclean
 	@$(MAKE) -C $(MASSERT_DIR) fclean
 
-re_tester: fclean_tester $(TESTER)
+re_t: fclean_t $(TESTER)
 
-.PHONY: fclean_tester re_tester
+.PHONY: fclean_t re_t
 
 ################################################################################
