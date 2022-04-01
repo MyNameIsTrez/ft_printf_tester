@@ -1,3 +1,9 @@
+# SUPER IMPORTANT TODO
+* Add tests for whether the returned value is correct, cause ft_printf_routine()
+  currently returns negative while the real printf never seems to do that.
+* Download more testers.
+
+
 # Before evaluations
 * Push to intra, instead of my personal GitHub.
 * Make test clone repo.
