@@ -1,5 +1,4 @@
 # Before evaluations
-* Uncomment "static" from header so STATIC works.
 * Push to intra, instead of my personal GitHub.
 * Make test clone repo.
 * paco and other tests (at least ft_printf_tester)

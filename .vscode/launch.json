@@ -14,13 +14,14 @@
 			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": false,
+			"preLaunchTask": "C/C++: gcc build project",
+			"internalConsoleOptions": "neverOpen"
 			// "osx": {
 			// 	"MIMode": "lldb"
 			// },
 			// "linux": {
 			// 	"MIMode": "gdb"
 			// },
-			"preLaunchTask": "C/C++: gcc build project",
 			// "internalConsoleOptions": "openOnSessionStart"
 			// "console": "internalConsole",
 			// "console": "none",
