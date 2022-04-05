@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test_parse_argument.c                              :+:    :+:            */
+/*   test_pft_parse_argument.c                          :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/20 11:34:27 by sbos          #+#    #+#                 */
-/*   Updated: 2022/03/04 18:53:04 by sbos          ########   odam.nl         */
+/*   Created: 2022/04/05 16:41:48 by sbos          #+#    #+#                 */
+/*   Updated: 2022/04/05 16:46:01 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	foo(char *prefix, char *expected, char *format, ...)
 	va_list		arg_ptr;
 
 	pft_initialize_options(&options);
-	parse_options_type(&format, &options.type);
+	pft_parse_options_type(&format, &options.type);
 	pft_fix_priorities(&options);
 
 	va_start(arg_ptr, format);

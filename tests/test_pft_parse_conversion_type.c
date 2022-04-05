@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   test_parse_field_width.c                           :+:    :+:            */
+/*   test_pft_parse_conversion_type.c                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/01/20 11:34:27 by sbos          #+#    #+#                 */
-/*   Updated: 2022/03/04 18:53:17 by sbos          ########   odam.nl         */
+/*   Created: 2022/04/05 16:42:40 by sbos          #+#    #+#                 */
+/*   Updated: 2022/04/05 16:53:14 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,14 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-Test(parse_field_width)
+Test(test_pft_parse_options_type)
 {
-	{
-		char *format = "42d";
-		t_options	options;
+	char *f = "d";
+	char **format = &f;
+	unsigned char type = '\0';
 
-		pft_initialize_options(&options);
-		parse_field_width(&format, &options.field_width);
-
-		massert(options.field_width, (size_t)42);
-		massert(*format, (char)'d');
-	}
-
-	{
-		char *format = "d";
-		t_options	options;
-
-		pft_initialize_options(&options);
-		parse_field_width(&format, &options.field_width);
-
-		massert(options.field_width, (size_t)0);
-		massert(*format, (char)'d');
-	}
+	pft_parse_options_type(format, &type);
+	massert(type, (unsigned char)'d');
 }
 
 ////////////////////////////////////////////////////////////////////////////////

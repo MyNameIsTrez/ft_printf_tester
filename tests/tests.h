@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 11:42:16 by sbos          #+#    #+#                 */
-/*   Updated: 2022/03/04 18:54:26 by sbos          ########   odam.nl         */
+/*   Updated: 2022/04/05 16:41:00 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ extern t_list	*g_tests_lst;
 // These are helper functions from bonus/src
 // that aren't in bonus/src/ft_printf_bonus.h as they are normally private.
 
-void	parse_options_type(char **format, unsigned char *type);
-void	parse_field_width(char **format, size_t *field_width);
-void	parse_flags(char **format, t_flags *flags);
-void	parse_precision(char **format, ssize_t *precision);
+void	pft_parse_options_type(char **format, unsigned char *type);
+void	pft_parse_field_width(char **format, size_t *field_width);
+void	pft_parse_flags(char **format, t_flags *flags);
+void	pft_parse_precision(char **format, ssize_t *precision);
 
 ////////////////////////////////////////////////////////////////////////////////
 

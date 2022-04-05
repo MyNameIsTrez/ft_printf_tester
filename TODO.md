@@ -2,8 +2,7 @@
 * Add tests for whether the returned value is correct, cause ft_printf_routine()
   currently returns negative while the real printf never seems to do that.
 * Download more testers.
-* Add parts tests and type & len tests to test_parse_format.c
-* Add pft_ to all function names.
+* Add parts tests and type & len tests to test_pft_parse_format.c
 
 
 # Before evaluations
