@@ -1,19 +1,11 @@
-# ft_printf
+# ft_printf_tester
 
-This is a recreation of printf() from libc.
-
-## How to create the archive
-
-`make`
-
-## How to create the archive, including the bonuses
-
-`make bonus`
+This is my tester for my recreation of printf() from libc.
 
 ## How to run my tests
 
+`make`
+
 It always includes the bonuses.
 
-`make -f tester.mk tester`
-
-I've added this project's .vscode folder so VS Code's debugger runs that command for you.
+You can press `F5` in VS Code to have its debugger run that command for you.
