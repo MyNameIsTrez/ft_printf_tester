@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 11:34:27 by sbos          #+#    #+#                 */
-/*   Updated: 2022/04/07 15:49:35 by sbos          ########   odam.nl         */
+/*   Updated: 2022/04/27 18:17:43 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ Test(pft_parse_format)
 		massert(options.flags.pad_right, (bool)true);
 		massert(options.flags.plus_space, (bool)true);
 		massert(options.flags.plus_sign, (bool)true);
-
-		m_safe_string_assert(options.parts.left_pad, "");
 
 		massert(options.field_width, (size_t)42);
 		massert(options.precision, (ssize_t)-1);

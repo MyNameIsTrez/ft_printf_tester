@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/04/27 17:44:38 by sbos          ########   odam.nl          #
+#    Updated: 2022/04/27 19:02:51 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,7 @@ all: $(PRE_RULES) $(LIBFT) $(PRINTF) $(OBJECTS)
 
 $(OBJ_DIR)/%.o: %.c $(HEADERS)
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
 	@$(MAKE) -C $(dir $(LIBFT))
@@ -68,7 +68,7 @@ $(LIBFT):
 $(PRINTF):
 	@$(MAKE) -C $(dir $(PRINTF))
 
-.PHONY: all
+.PHONY: all $(LIBFT) $(PRINTF)
 
 ################################################################################
 
