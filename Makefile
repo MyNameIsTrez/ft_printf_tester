@@ -5,88 +5,89 @@
 #                                                      +:+                     #
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
-#    Created: 2022/04/01 13:58:25 by sbos          #+#    #+#                  #
-#    Updated: 2022/04/01 13:58:34 by sbos          ########   odam.nl          #
+#    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
+#    Updated: 2022/04/27 17:44:38 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 ################################################################################
 
-PROJECT_NAME := ft_printf
+export DEBUG=1
+
+LIBFT := libft/libft.a
+PRINTF := ft_printf/libftprintf.a
+
+CC := cc
+
+LIBS := $(PRINTF)
+
+override TESTS_DIR := tests
+OBJ_DIR := obj
+
+CFLAGS := -Wall -Wextra -Werror
+CFLAGS += -O3 # -O1 or higher adds tail recursion detection.
+CFLAGS += -g3 -Wconversion
+# CFLAGS += -fsanitize=address
+
+HEADERS :=\
+	$(TESTS_DIR)/ft_printf_tests.h\
+	ft_printf/src/ft_printf.h\
+	ft_printf/src/get_type_strings/pft_get_type_strings.h\
+	tests/tests_get_type_strings/test_get_type_strings.h\
+	$(addprefix $(HOME)/Documents/Programming/libctester/, $(shell $(MAKE) -C $(HOME)/Documents/Programming/libctester/ -f headers.mk get_headers))
 
 ################################################################################
 
-MAKEFILE_DIR := $(PROJECT_NAME)
+SOURCES := $(shell find $(TESTS_DIR) -name "*.c")
 
-export DEBUG := 1
-include $(MAKEFILE_DIR)/Makefile
-export NO_STATIC := 1
+OBJECTS := $(addprefix $(OBJ_DIR)/,$(SOURCES:.c=.o))
 
-################################################################################
-
-TESTS_DIR := tests
-TESTS_OBJ_DIR := obj_tests
-
-MASSERT_DIR := libmassert
-
-TESTER := tester
-
-TESTER_HEADERS :=											\
-	$(addprefix $(MAKEFILE_DIR)/, $(HEADERS))				\
-	$(TESTS_DIR)/tests.h									\
-	$(MASSERT_DIR)/massert.h								\
-	tests/tests_get_type_strings/test_get_type_strings.h
-# TODO: ^ Leave this get_type_strings header out?
-
-TESTER_LIB_NAMES :=					\
-	$(MASSERT_DIR)/libmassert.a		\
-	$(MAKEFILE_DIR)/libftprintf.a
+INCLUDES := $(sort $(addprefix -I, $(dir $(HEADERS))))
 
 ################################################################################
 
-MASSERT := $(MASSERT_DIR)/libmassert.a
-
-TESTER_SOURCES := $(wildcard $(TESTS_DIR)/*.c) $(wildcard $(TESTS_DIR)/**/*.c)
-TESTER_OBJECTS := $(addprefix $(TESTS_OBJ_DIR)/,$(TESTER_SOURCES:.c=.o))
-
-TESTER_INCLUDES := $(sort $(addprefix -I, $(dir $(TESTER_HEADERS))))
-
-TESTER_LIB_FLAGS := $(sort $(addprefix -L,$(dir $(TESTER_LIB_NAMES)))) $(sort $(patsubst lib%,-l%,$(basename $(notdir $(TESTER_LIB_NAMES)))))
-
-START_OF_MAKEFILE := bonus
-START_OF_MAKEFILE_SHORTCUT := foo$(START_OF_MAKEFILE)
+# Only cleans when MAKE_DATA changes.
+DATA_FILE := .make_data
+MAKE_DATA := $(CFLAGS) $(SOURCES)
+ifneq ($(shell echo "$(MAKE_DATA)"), $(shell cat "$(DATA_FILE)" 2> /dev/null))
+PRE_RULES := clean
+endif
 
 ################################################################################
 
-$(START_OF_MAKEFILE_SHORTCUT):
-	$(MAKE) -C $(MAKEFILE_DIR) $(START_OF_MAKEFILE)
+all: $(PRE_RULES) $(LIBFT) $(PRINTF) $(OBJECTS)
+	@echo "$(MAKE_DATA)" > $(DATA_FILE)
 
-.DEFAULT_GOAL := $(TESTER)
-$(TESTER): $(START_OF_MAKEFILE_SHORTCUT) $(MASSERT) $(TESTER_OBJECTS)
-	$(CC) $(CFLAGS) $(TESTER_INCLUDES) -g3 $(TESTER_OBJECTS) $(TESTER_LIB_FLAGS) -o $(TESTER)
-
-$(TESTS_OBJ_DIR)/%.o: %.c $(TESTER_HEADERS)
+$(OBJ_DIR)/%.o: %.c $(HEADERS)
 	@mkdir -p $(@D)
-	$(CC) $(CFLAGS) -Wno-format $(TESTER_INCLUDES) -c $< -o $@
-# TODO: ^ What is this -Wno-format for?
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(LIBFT):
+	@$(MAKE) -C $(dir $(LIBFT))
+
+$(PRINTF):
+	@$(MAKE) -C $(dir $(PRINTF))
+
+.PHONY: all
 
 ################################################################################
 
-$(MASSERT):
-	@$(MAKE) -C $(MASSERT_DIR)
+clean:
+	rm -rf $(OBJ_DIR)/
 
-.PHONY: $(MASSERT)
+fclean: clean
+	@$(MAKE) -C $(dir $(LIBFT)) fclean
+	@$(MAKE) -C $(dir $(PRINTF)) fclean
+
+re: fclean all
+
+.PHONY: clean fclean re
 
 ################################################################################
 
-fclean_t:
-	rm -rf $(TESTS_OBJ_DIR)
-	rm -f $(TESTER)
-	@$(MAKE) -C $(MAKEFILE_DIR) fclean
-	@$(MAKE) -C $(MASSERT_DIR) fclean
+get_libs:
+	@echo $(LIBS)
 
-re_t: fclean_t $(TESTER)
-
-.PHONY: fclean_t re_t
+.PHONY: get_libs
 
 ################################################################################

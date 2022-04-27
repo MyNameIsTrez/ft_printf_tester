@@ -1,24 +1,15 @@
 {
+	"version": "2.0.0",
 	"tasks": [
 		{
+			"label": "Build Tester",
 			"type": "shell",
-			"label": "C/C++: gcc build project",
-			"command": "make",
-			"args": [],
-			"options": {
-				"cwd": "${workspaceFolder}"
-			},
+			"command": "~/Documents/Programming/libctester/run_ctester.sh",
+			"args": [ "no run" ],
 			"problemMatcher": [
 				"$gcc"
 			],
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"presentation": {
-				"reveal": "always"
-			},
+			"group": "build"
 		}
-	],
-	"version": "2.0.0"
+	]
 }
