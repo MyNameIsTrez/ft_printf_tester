@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/04/27 19:05:18 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/04 16:59:09 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 #include <stdint.h>
+#include <limits.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -149,6 +150,11 @@ Test(ft_printf)
 		_Pragma("GCC diagnostic ignored \"-Wformat\"")
 		// compare_printfs("%");
 		_Pragma("GCC diagnostic pop")
+	}
+	{
+		// void *x = malloc(10);
+		// x = 0;
+		compare_printfs("%+.1d, %+.1d, %+.1d, %+.1d, %+.1d, %+.1d, %+.1d, %+.1d", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
 	}
 }
 
