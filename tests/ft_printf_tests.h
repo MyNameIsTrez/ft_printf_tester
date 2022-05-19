@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 11:42:16 by sbos          #+#    #+#                 */
-/*   Updated: 2022/04/27 15:48:50 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/19 12:37:11 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,25 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-# define get_output(fn, buf, ret)													\
-{																					\
-	int	stdout_fd = dup(STDOUT_FILENO);												\
-	int const	fd = open("/tmp/" #fn "_test", O_RDWR | O_CREAT | O_TRUNC, 0640);	\
-	dup2(fd, STDOUT_FILENO);														\
-	ret = fn;																		\
-	fflush(NULL);																	\
-	FILE *f = fdopen(fd, "rw");														\
-	fseek(f, 0, SEEK_END);															\
-	long file_size = ftell(f);														\
-	buf = malloc((size_t)file_size + 1);											\
-	ft_memset(buf, '\0', (size_t)file_size + 1);									\
-	lseek(fd, 0, SEEK_SET);															\
-	read(fd, buf, (size_t)file_size);												\
-	close(fd);																		\
-	dup2(stdout_fd, STDOUT_FILENO);													\
+extern int output_fd;
+extern int ft_output_fd;
+
+extern FILE *output_filestream;
+extern FILE *ft_output_filestream;
+
+# define get_output(fn, buf, ret, fd, filestream)								\
+{																				\
+	int	stdout_fd = dup(STDOUT_FILENO);											\
+	dup2(fd, STDOUT_FILENO);													\
+	ret = fn;																	\
+	fflush(NULL);																\
+	fseek(filestream, 0, SEEK_END);												\
+	long file_size = ftell(filestream);											\
+	buf = malloc((size_t)file_size + 1);										\
+	ft_memset(buf, '\0', (size_t)file_size + 1);								\
+	lseek(fd, 0, SEEK_SET);														\
+	read(fd, buf, (size_t)file_size);											\
+	dup2(stdout_fd, STDOUT_FILENO);												\
 }
 
 #define	compare_printfs(...)													\
@@ -62,8 +65,8 @@
 	char *ft_buf;																\
 	int ft_ret;																	\
 																				\
-	get_output(printf(__VA_ARGS__), buf, ret);									\
-	get_output(ft_printf(__VA_ARGS__), ft_buf, ft_ret);							\
+	get_output(printf(__VA_ARGS__), buf, ret, output_fd, output_filestream);						\
+	get_output(ft_printf(__VA_ARGS__), ft_buf, ft_ret, ft_output_fd, ft_output_filestream);			\
 	massert(buf, ft_buf);														\
 	massert(ret, ft_ret);														\
 	free(buf);																	\

@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/04 16:59:09 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/19 12:34:00 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,39 @@
 
 #include <stdint.h>
 #include <limits.h>
+
+////////////////////////////////////////////////////////////////////////////////
+
+int output_fd = -1;
+int ft_output_fd = -1;
+
+FILE *output_filestream = NULL;
+FILE *ft_output_filestream = NULL;
+
+BeforeMain(set_fd)
+{
+	output_fd = open("/tmp/pft_output", O_RDWR | O_CREAT, 0640);
+	ft_output_fd = open("/tmp/ft_pft_output", O_RDWR | O_CREAT, 0640);
+
+	output_filestream = fdopen(output_fd, "rw");
+	ft_output_filestream = fdopen(ft_output_fd, "rw");
+}
+
+AfterMain(set_fd)
+{
+	if (output_fd != -1)
+		close(output_fd);
+	if (ft_output_fd != -1)
+		close(ft_output_fd);
+
+	if (output_filestream != NULL)
+		fclose(output_filestream);
+	if (ft_output_filestream != NULL)
+		fclose(ft_output_filestream);
+
+	remove("/tmp/pft_output");
+	remove("/tmp/ft_pft_output");
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
