@@ -2,15 +2,16 @@
 	"version": "0.2.0",
 	"configurations": [{
 		"name": "libft",
-		"type": "cppdbg",
+		"type": "lldb",
 		"request": "launch",
 		"program": "${workspaceFolder}/libctester/ctester",
 		"args": [],
-		"stopAtEntry": false,
+		// "stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
-		"environment": [],
-		"externalConsole": false,
-		"MIMode": "lldb",
+		"reverseDebugging": true,
+		// "environment": [],
+		// "externalConsole": false,
+		// "MIMode": "lldb",
 		"preLaunchTask": "Build Tester",
 		"internalConsoleOptions": "neverOpen"
 	}]
