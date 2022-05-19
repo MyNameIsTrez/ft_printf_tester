@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/05 16:41:48 by sbos          #+#    #+#                 */
-/*   Updated: 2022/04/07 15:49:35 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/19 12:58:14 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void	foo(char *prefix, char *expected, char *format, ...)
+void	pft_parse_argument_call(char *prefix, char *expected, char *format, ...)
 {
 	t_options	options;
 	va_list		arg_ptr;
@@ -37,16 +37,16 @@ void	foo(char *prefix, char *expected, char *format, ...)
 
 Test(pft_parse_argument)
 {
-	foo("", "a", "c", 'a');
-	foo("", "42", "d", 42);
-	foo("-", "42", "d", -42);
-	foo("-", "2147483648", "d", -2147483648);
-	foo("", "42a", "x", 0x42a);
-	foo("", "42A", "X", 0x42a);
-	foo("", "%", "%");
-	foo("0x", "42a", "p", (void *)0x42a);
-	foo("", "foo", "s", "foo\0bar");
-	foo("", "42", "u", 42);
+	pft_parse_argument_call("", "a", "c", 'a');
+	pft_parse_argument_call("", "42", "d", 42);
+	pft_parse_argument_call("-", "42", "d", -42);
+	pft_parse_argument_call("-", "2147483648", "d", -2147483648);
+	pft_parse_argument_call("", "42a", "x", 0x42a);
+	pft_parse_argument_call("", "42A", "X", 0x42a);
+	pft_parse_argument_call("", "%", "%");
+	pft_parse_argument_call("0x", "42a", "p", (void *)0x42a);
+	pft_parse_argument_call("", "foo", "s", "foo\0bar");
+	pft_parse_argument_call("", "42", "u", 42);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
