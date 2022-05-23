@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/05 16:41:48 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/19 12:58:14 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/23 12:50:33 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ void	pft_parse_argument_call(char *prefix, char *expected, char *format, ...)
 	pft_fix_priorities(&options);
 
 	va_start(arg_ptr, format);
-	pft_parse_argument(&options, arg_ptr);
+	if (pft_parse_argument(&options, arg_ptr) != SUCCESS)
+	{
+		pft_free_parts(&options.parts);
+		options.parts.base_str = NULL;
+	}
 	va_end(arg_ptr);
 
-	massert(options.parts.base_str, expected);
-	massert(options.parts.prefix, prefix);
+	m_safe_string_assert(options.parts.base_str, expected, false);
+	m_safe_string_assert(options.parts.prefix, prefix, true);
 
 	pft_free_parts(&options.parts);
 }
