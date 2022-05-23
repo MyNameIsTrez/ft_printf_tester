@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 11:42:16 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/19 12:37:11 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/23 14:27:11 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,34 +43,41 @@ extern int ft_output_fd;
 extern FILE *output_filestream;
 extern FILE *ft_output_filestream;
 
-# define get_output(fn, buf, ret, fd, filestream)								\
-{																				\
-	int	stdout_fd = dup(STDOUT_FILENO);											\
-	dup2(fd, STDOUT_FILENO);													\
-	ret = fn;																	\
-	fflush(NULL);																\
-	fseek(filestream, 0, SEEK_END);												\
-	long file_size = ftell(filestream);											\
-	buf = malloc((size_t)file_size + 1);										\
-	ft_memset(buf, '\0', (size_t)file_size + 1);								\
-	lseek(fd, 0, SEEK_SET);														\
-	read(fd, buf, (size_t)file_size);											\
-	dup2(stdout_fd, STDOUT_FILENO);												\
+extern int real_stdout;
+
+# define get_output(fn, buf, ret, fd, filestream)\
+{\
+	dup2(fd, STDOUT_FILENO);\
+ 	lseek(fd, 0, SEEK_SET);\
+	fseek(filestream, 0, SEEK_SET);\
+	ftruncate(fd, 0);\
+	ret = fn;\
+	fflush(NULL);\
+	fseek(filestream, 0, SEEK_END);\
+	long file_size = ftell(filestream);\
+	buf = malloc((size_t)file_size + 1);\
+	ft_memset(buf, '\0', (size_t)file_size + 1);\
+	lseek(fd, 0, SEEK_SET);\
+	read(fd, buf, (size_t)file_size);\
+	dup2(real_stdout, STDOUT_FILENO);\
 }
 
-#define	compare_printfs(...)													\
-{																				\
-	char *buf;																	\
-	int ret;																	\
-	char *ft_buf;																\
-	int ft_ret;																	\
-																				\
-	get_output(printf(__VA_ARGS__), buf, ret, output_fd, output_filestream);						\
-	get_output(ft_printf(__VA_ARGS__), ft_buf, ft_ret, ft_output_fd, ft_output_filestream);			\
-	massert(buf, ft_buf);														\
-	massert(ret, ft_ret);														\
-	free(buf);																	\
-	free(ft_buf);																\
+#define	compare_printfs(...)\
+{\
+	char *buf;\
+	int ret;\
+	char *ft_buf;\
+	int ft_ret;\
+\
+	get_output(printf(__VA_ARGS__), buf, ret, output_fd, output_filestream);\
+	get_output(ft_printf(__VA_ARGS__), ft_buf, ft_ret, ft_output_fd, ft_output_filestream);\
+	m_safe_assert(int, ft_ret, ret, -1, false);\
+	if (!was_malloc_unstable AND !was_write_unstable)\
+		massert(ft_buf, buf);\
+	was_malloc_unstable = false;\
+	was_write_unstable = false;\
+	free(buf);\
+	free(ft_buf);\
 }
 
 ////////////////////////////////////////////////////////////////////////////////

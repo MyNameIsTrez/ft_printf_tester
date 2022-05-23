@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/19 12:34:00 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/23 14:28:03 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,17 @@ int ft_output_fd = -1;
 FILE *output_filestream = NULL;
 FILE *ft_output_filestream = NULL;
 
+int real_stdout = -1;
+
 BeforeMain(set_fd)
 {
-	output_fd = open("/tmp/pft_output", O_RDWR | O_CREAT, 0640);
-	ft_output_fd = open("/tmp/ft_pft_output", O_RDWR | O_CREAT, 0640);
+	output_fd = open("/tmp/pft_output", O_RDWR | O_CREAT | O_TRUNC, 0640);
+	ft_output_fd = open("/tmp/ft_pft_output", O_RDWR | O_CREAT | O_TRUNC, 0640);
 
 	output_filestream = fdopen(output_fd, "rw");
 	ft_output_filestream = fdopen(ft_output_fd, "rw");
+
+	real_stdout = dup(STDOUT_FILENO);
 }
 
 AfterMain(set_fd)
@@ -185,9 +189,12 @@ Test(ft_printf)
 		_Pragma("GCC diagnostic pop")
 	}
 	{
-		// void *x = malloc(10);
-		// x = 0;
 		compare_printfs("%+.1d, %+.1d, %+.1d, %+.1d, %+.1d, %+.1d, %+.1d, %+.1d", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
+		compare_printfs("%+.100d, %+.100d, %+.100d, %+.100d, %+.100d, %+.100d, %+.100d, %+.100d", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
+		compare_printfs("%+1.0i, %+1.0i, %+1.0i, %+1.0i, %+1.0i, %+1.0i, %+1.0i, %+1.0i", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
+		compare_printfs("%100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u", 0, 5, -1, -10, 100, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
+		compare_printfs("%100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
+		compare_printfs("%100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
 	}
 }
 
