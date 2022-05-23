@@ -2,16 +2,16 @@
 	"version": "0.2.0",
 	"configurations": [{
 		"name": "libft",
-		"type": "lldb",
+		"type": "cppdbg", // Can't use lldb since it doesn't support expression based breakpoints.
 		"request": "launch",
 		"program": "${workspaceFolder}/libctester/ctester",
 		"args": [],
 		// "stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
-		"reverseDebugging": true,
+		// "reverseDebugging": true,
 		// "environment": [],
 		// "externalConsole": false,
-		// "MIMode": "lldb",
+		"MIMode": "lldb",
 		"preLaunchTask": "Build Tester",
 		"internalConsoleOptions": "neverOpen"
 	}]
