@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/23 16:09:03 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/23 16:13:14 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,12 @@ Test(ft_printf)
 		compare_printfs("%010.100i, %010.100i, %010.100i, %010.100i, %010.100i, %010.100i, %010.100i, %010.100i", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
 		compare_printfs("%0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
 		compare_printfs("%0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
+	}
+	{
+		_Pragma("GCC diagnostic push")
+		_Pragma("GCC diagnostic ignored \"-Wformat\"")
+		compare_printfs("%+ d", 42);
+		_Pragma("GCC diagnostic pop")
 	}
 }
 
