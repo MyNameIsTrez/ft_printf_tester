@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/23 14:28:03 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/23 16:09:03 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,11 @@ Test(ft_printf)
 		compare_printfs("%100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u, %100.0u", 0, 5, -1, -10, 100, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
 		compare_printfs("%100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x, %100.0x", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
 		compare_printfs("%100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X, %100.0X", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
+
+		compare_printfs("%010.100d, %010.100d, %010.100d, %010.100d, %010.100d, %010.100d, %010.100d, %010.100d", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
+		compare_printfs("%010.100i, %010.100i, %010.100i, %010.100i, %010.100i, %010.100i, %010.100i, %010.100i", 0, 5, -1, -10, 100, -1862, INT_MIN, INT_MAX);
+		compare_printfs("%0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x, %0#.1x", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
+		compare_printfs("%0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X, %0#5X", 0, 5, -1, -10, 0x1234, -1862, 0xABCDE, INT_MIN, INT_MAX, UINT_MAX);
 	}
 }
 
