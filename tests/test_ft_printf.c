@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/23 16:13:14 by sbos          ########   odam.nl         */
+/*   Updated: 2022/05/25 17:00:36 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,9 @@ Test(ft_printf)
 		_Pragma("GCC diagnostic ignored \"-Wformat\"")
 		compare_printfs("%+ d", 42);
 		_Pragma("GCC diagnostic pop")
+	}
+	{
+		compare_printfs("%-d", INT_MIN);
 	}
 }
 
