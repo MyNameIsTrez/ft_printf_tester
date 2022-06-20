@@ -1,7 +1,7 @@
 {
 	"version": "0.2.0",
 	"configurations": [{
-		"name": "libft",
+		"name": "ft_printf",
 		"type": "cppdbg", // Can't use lldb since it doesn't support expression based breakpoints.
 		"request": "launch",
 		"program": "${workspaceFolder}/libctester/ctester",
