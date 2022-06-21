@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/05/04 16:04:51 by sbos          ########   odam.nl          #
+#    Updated: 2022/06/20 14:42:08 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,22 +72,22 @@ $(PRINTF):
 
 ################################################################################
 
+.PHONY: clean
 clean:
 	rm -rf $(OBJ_DIR)
 
+.PHONY: fclean
 fclean: clean
 	@$(MAKE) -C $(dir $(LIBFT)) fclean
 	@$(MAKE) -C $(dir $(PRINTF)) fclean
 
+.PHONY: re
 re: fclean all
-
-.PHONY: clean fclean re
 
 ################################################################################
 
+.PHONY: get_libs
 get_libs:
 	@echo $(LIBS)
-
-.PHONY: get_libs
 
 ################################################################################
