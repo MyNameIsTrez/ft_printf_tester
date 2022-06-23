@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/06/20 14:42:08 by sbos          ########   odam.nl          #
+#    Updated: 2022/06/23 14:17:53 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ LIBFT := libft/libft.a
 PRINTF := ft_printf/libftprintf.a
 
 CC := cc
+
+LIBCTESTER_PATH := libctester
 
 LIBS := $(PRINTF)
 
@@ -80,6 +82,7 @@ clean:
 fclean: clean
 	@$(MAKE) -C $(dir $(LIBFT)) fclean
 	@$(MAKE) -C $(dir $(PRINTF)) fclean
+	@$(MAKE) -C $(LIBCTESTER_PATH) fclean
 
 .PHONY: re
 re: fclean all
