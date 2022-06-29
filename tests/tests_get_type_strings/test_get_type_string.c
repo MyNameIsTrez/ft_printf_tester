@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/03 12:44:11 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/06 15:31:26 by sbos          ########   odam.nl         */
+/*   Updated: 2022/06/29 12:49:36 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	test_get_type_string(t_base_and_prefix_fn get_type_string,
 
 	pft_initialize_options(&options);
 	va_start(arg_ptr, expected);
-	if (get_type_string(arg_ptr, &options) != SUCCESS)
+	if (get_type_string(arg_ptr, &options) != OK)
 	{
 		pft_free_parts(&options.parts);
 		options.parts.base_str = NULL;
