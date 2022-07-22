@@ -5,7 +5,7 @@
 			"label": "Build Tester",
 			"type": "shell",
 			"command": "~/Documents/Programming/libctester/run_ctester.sh",
-			"args": [ "no run" ],
+			"args": [ "DEBUG", "O3" ],
 			"problemMatcher": [
 				"$gcc"
 			],

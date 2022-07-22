@@ -1,18 +1,48 @@
 {
 	"version": "0.2.0",
-	"configurations": [{
-		"name": "ft_printf",
-		"type": "cppdbg", // Can't use lldb since it doesn't support expression based breakpoints.
+	"configurations": [
+	{
+		"name": "libft (cppdbg)",
+
+		"type": "cppdbg",
+		"MIMode": "lldb",
+		"stopAtEntry": false,
+		"environment": [],
+		"externalConsole": false,
+
 		"request": "launch",
 		"program": "${workspaceFolder}/libctester/ctester",
 		"args": [],
-		// "stopAtEntry": false,
 		"cwd": "${workspaceFolder}",
-		// "reverseDebugging": true,
-		// "environment": [],
-		// "externalConsole": false,
-		"MIMode": "lldb",
 		"preLaunchTask": "Build Tester",
 		"internalConsoleOptions": "neverOpen"
-	}]
+	},
+	{
+		"name": "libft (lldb)",
+
+		"type": "lldb",
+
+		"request": "launch",
+		"program": "${workspaceFolder}/libctester/ctester",
+		"args": [],
+		"cwd": "${workspaceFolder}",
+		"preLaunchTask": "Build Tester",
+		"internalConsoleOptions": "neverOpen"
+	}
+	// {
+	// 	"name": "ft_printf",
+	// 	"type": "cppdbg", // Can't use lldb since it doesn't support expression based breakpoints.
+	// 	"request": "launch",
+	// 	"program": "${workspaceFolder}/libctester/ctester",
+	// 	"args": [],
+	// 	// "stopAtEntry": false,
+	// 	"cwd": "${workspaceFolder}",
+	// 	// "reverseDebugging": true,
+	// 	// "environment": [],
+	// 	// "externalConsole": false,
+	// 	"MIMode": "lldb",
+	// 	"preLaunchTask": "Build Tester",
+	// 	"internalConsoleOptions": "neverOpen"
+	// }
+	]
 }
