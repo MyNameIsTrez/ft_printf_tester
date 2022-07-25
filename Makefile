@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/07/25 15:17:24 by sbos          ########   odam.nl          #
+#    Updated: 2022/07/25 15:35:44 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ CFLAGS += -g3 -Wconversion
 # CFLAGS += -fsanitize=address
 
 HEADERS :=\
-	ft_printf/src/get_type_strings/get_type_strings.h\
 	tests/tests_get_type_strings/test_get_type_strings.h
 
 INCLUDES_HEADERS :=\
