@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/07/22 21:21:18 by sbos          ########   odam.nl          #
+#    Updated: 2022/07/25 15:17:24 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,13 @@ CFLAGS += -g3 -Wconversion
 # CFLAGS += -fsanitize=address
 
 HEADERS :=\
+	ft_printf/src/get_type_strings/get_type_strings.h\
+	tests/tests_get_type_strings/test_get_type_strings.h
+
+INCLUDES_HEADERS :=\
 	$(TESTS_DIR)/ft_printf_tests.h\
 	ft_printf/src/ft_printf.h\
-	ft_printf/src/get_type_strings/pft_get_type_strings.h\
-	tests/tests_get_type_strings/test_get_type_strings.h\
-	$(addprefix $(HOME)/Documents/Programming/libctester/, $(shell $(MAKE) -C $(HOME)/Documents/Programming/libctester/ -f headers.mk get_headers))
+	$(shell $(MAKE) -C $(HOME)/Documents/Programming/libctester/ -f headers.mk get_includes_headers)
 
 ################################################################################
 
@@ -47,7 +49,9 @@ SOURCES := $(shell find $(TESTS_DIR) -name "*.c")
 
 OBJECTS := $(addprefix $(OBJ_DIR)/,$(SOURCES:.c=.o))
 
-INCLUDES := $(sort $(addprefix -I, $(dir $(HEADERS))))
+HEADERS += $(INCLUDES_HEADERS)
+
+INCLUDES := $(sort $(addprefix -I, $(dir $(INCLUDES_HEADERS))))
 
 ################################################################################
 

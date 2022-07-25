@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/20 11:42:16 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/23 14:27:11 by sbos          ########   odam.nl         */
+/*   Updated: 2022/07/25 15:12:01 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,9 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-// # include "tests.h"
-
-// # include "libft_tests.h"
-// # include "../../libft_tester/tests/libft_tests.h"
-// # include "/Users/sbos/Documents/Programming/Project-Testers/libft_tester/tests/libft_tests.h"
-
-////////////////////////////////////////////////////////////////////////////////
-
 # include "ft_printf.h"
 
-# include "test_get_type_strings.h"
+# include "tests_get_type_strings/test_get_type_strings.h"
 
 # include "ctester.h"
 
