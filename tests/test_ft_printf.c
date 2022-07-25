@@ -6,7 +6,7 @@
 /*   By: sbos <sbos@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/02/23 17:56:28 by sbos          #+#    #+#                 */
-/*   Updated: 2022/05/25 17:00:36 by sbos          ########   odam.nl         */
+/*   Updated: 2022/07/25 16:25:12 by sbos          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ BeforeMain(set_fd)
 
 AfterMain(set_fd)
 {
-	if (output_fd != -1)
-		close(output_fd);
-	if (ft_output_fd != -1)
-		close(ft_output_fd);
-
 	if (output_filestream != NULL)
 		fclose(output_filestream);
 	if (ft_output_filestream != NULL)
 		fclose(ft_output_filestream);
+
+	if (real_stdout != -1)
+		close(real_stdout);
 
 	remove("/tmp/pft_output");
 	remove("/tmp/ft_pft_output");
