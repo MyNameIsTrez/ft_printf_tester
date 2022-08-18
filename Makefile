@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/07/25 15:35:44 by sbos          ########   odam.nl          #
+#    Updated: 2022/08/18 15:03:58 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,9 @@ LIBS := $(PRINTF)
 override TESTS_DIR := tests
 OBJ_DIR := obj
 
-CFLAGS := -Wall -Wextra -Werror
-CFLAGS += -O3 # -O1 or higher adds tail recursion detection.
-CFLAGS += -g3 -Wconversion
+CFLAGS := -Wall -Wextra -Werror -Wconversion -Wpedantic -Werror-pointer-arith
+CFLAGS += -O3
+CFLAGS += -g3
 # CFLAGS += -fsanitize=address
 
 HEADERS :=\
