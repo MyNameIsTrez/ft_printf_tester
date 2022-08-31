@@ -6,7 +6,7 @@
 #    By: sbos <sbos@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/04/22 18:42:17 by sbos          #+#    #+#                  #
-#    Updated: 2022/08/18 15:03:58 by sbos          ########   odam.nl          #
+#    Updated: 2022/08/31 16:25:00 by sbos          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ LIBS := $(PRINTF)
 override TESTS_DIR := tests
 OBJ_DIR := obj
 
-CFLAGS := -Wall -Wextra -Werror -Wconversion -Wpedantic -Werror-pointer-arith
+CFLAGS := -Wall -Wextra -Werror -Wconversion -Wpedantic -Wfatal-errors
 CFLAGS += -O3
 CFLAGS += -g3
 # CFLAGS += -fsanitize=address
@@ -63,20 +63,27 @@ endif
 
 ################################################################################
 
+.PHONY: all
 all: $(PRE_RULES) $(LIBFT) $(PRINTF) $(OBJECTS)
 	@echo "$(MAKE_DATA)" > $(DATA_FILE)
+
+################################################################################
+
+.PHONY: $(LIBFT)
+$(LIBFT):
+	git submodule update --init --recursive
+	@$(MAKE) -C $(dir $(LIBFT))
+
+.PHONY: $(PRINTF)
+$(PRINTF):
+	git submodule update --init --recursive
+	@$(MAKE) -C $(dir $(PRINTF))
+
+################################################################################
 
 $(OBJ_DIR)/%.o: %.c $(HEADERS)
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(LIBFT):
-	@$(MAKE) -C $(dir $(LIBFT))
-
-$(PRINTF):
-	@$(MAKE) -C $(dir $(PRINTF))
-
-.PHONY: all $(LIBFT) $(PRINTF)
 
 ################################################################################
 
@@ -86,6 +93,7 @@ clean:
 
 .PHONY: fclean
 fclean: clean
+	git submodule update --init --recursive
 	@$(MAKE) -C $(dir $(LIBFT)) fclean
 	@$(MAKE) -C $(dir $(PRINTF)) fclean
 	@$(MAKE) -C $(LIBCTESTER_PATH) fclean
