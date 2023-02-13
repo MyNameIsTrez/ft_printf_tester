@@ -64,7 +64,7 @@ extern int real_stdout;
 	get_output(printf(__VA_ARGS__), buf, ret, output_fd, output_filestream);\
 	get_output(ft_printf(__VA_ARGS__), ft_buf, ft_ret, ft_output_fd, ft_output_filestream);\
 	m_safe_assert(int, ft_ret, ret, -1, false);\
-	if (!was_malloc_unstable AND !was_write_unstable)\
+	if (!was_malloc_unstable && !was_write_unstable)\
 		massert(ft_buf, buf);\
 	was_malloc_unstable = false;\
 	was_write_unstable = false;\
